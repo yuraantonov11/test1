@@ -3,12 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
-
-enum TileState {
-  empty,
-  cross,
-  circle,
-}
+import 'package:test1/screens/tictactoe/models/tile_state.dart';
 
 class TicTacToeGame extends StatefulWidget {
   final BluetoothDevice? server;
