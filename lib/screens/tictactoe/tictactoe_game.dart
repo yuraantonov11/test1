@@ -96,48 +96,57 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
   }
 
   void _checkForWinner() {
-    for (int i = 0; i < 3; i++) {
-      if (board[i][0] == board[i][1] && board[i][1] == board[i][2] &&
-          board[i][0] != TileState.empty) {
+    // Check rows
+    for (int row = 0; row < 3; row++) {
+      if (board[row][0] != TileState.empty &&
+          board[row][0] == board[row][1] &&
+          board[row][1] == board[row][2]) {
         setState(() {
-          winner = board[i][0];
-        });
-        return;
-      }
-      if (board[0][i] == board[1][i] && board[1][i] == board[2][i] &&
-          board[0][i] != TileState.empty) {
-        setState(() {
-          winner = board[0][i];
+          winner = board[row][0];
         });
         return;
       }
     }
-    if (board[0][0] == board[1][1] && board[1][1] == board[2][2] &&
-        board[0][0] != TileState.empty) {
+
+    // Check columns
+    for (int col = 0; col < 3; col++) {
+      if (board[0][col] != TileState.empty &&
+          board[0][col] == board[1][col] &&
+          board[1][col] == board[2][col]) {
+        setState(() {
+          winner = board[0][col];
+        });
+        return;
+      }
+    }
+
+    // Check diagonals
+    if (board[0][0] != TileState.empty &&
+        board[0][0] == board[1][1] &&
+        board[1][1] == board[2][2]) {
       setState(() {
-        winner = currentPlayer;
+        winner = board[0][0];
       });
       return;
     }
-// Check diagonal (top right to bottom left)
-    if (board[0][2] == board[1][1] && board[1][1] == board[2][0] &&
-        board[0][2] != TileState.empty) {
+    if (board[0][2] != TileState.empty &&
+        board[0][2] == board[1][1] &&
+        board[1][1] == board[2][0]) {
       setState(() {
-        winner = currentPlayer;
+        winner = board[0][2];
       });
       return;
     }
 
-// Check for tie
+    // Check for tie
     if (_totalMoves == 9 && winner == TileState.empty) {
       setState(() {
         _message = 'It\'s a tie!';
       });
       return;
     }
-
-    return;
   }
+
 
   void _resetGame() {
     setState(() {

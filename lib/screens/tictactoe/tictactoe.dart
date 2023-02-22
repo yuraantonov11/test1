@@ -10,9 +10,6 @@ class _TicTacToeState extends State<TicTacToe> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Tic Tac Toe'),
-      ),
       body: TicTacToeGame(),
     );
   }
