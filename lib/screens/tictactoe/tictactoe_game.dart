@@ -40,48 +40,39 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
 
   Future<void> _connect() async {
     try {
-      BluetoothConnection _connection = await BluetoothConnection.toAddress(
-          widget.server?.address);
+      BluetoothConnection _connection = await BluetoothConnection.toAddress(widget.server?.address);
       print('Connected to the device');
       setState(() {
         connection = _connection;
         connected = true;
-        server = false;
       });
-
       connection?.input?.listen(_handleIncomingData).onDone(() {
         print('Disconnected by remote request');
         setState(() {
           connection = null;
           connected = false;
-          server = false;
         });
       });
     } catch (ex) {
-      print('Cannot connect, exception occured');
+      print('Cannot connect, exception occurred');
       print(ex);
     }
   }
 
+
   void _handleIncomingData(List<int> data) {
-    String incoming = String.fromCharCodes(data).trim();
-    List<String> parts = incoming.split(',');
-
-    int row = int.parse(parts[0]);
-    int col = int.parse(parts[1]);
-
+    int row = data[0];
+    int col = data[1];
+    TileState tile = TileState.values[data[2]];
     setState(() {
-      board[row][col] = TileState.values[int.parse(parts[2])];
-      currentPlayer = TileState.values[int.parse(parts[3])];
+      board[row][col] = tile;
+      currentPlayer = TileState.values[data[3]];
     });
-
-    if (winner != TileState.empty) {
-      setState(() {
-        _message = '${winner.toString().split('.').last} won!';
-      });
-      return;
+    if (winner == TileState.empty) {
+      _checkForWinner();
     }
   }
+
 
 
   Future<void> _sendData(int row, int col, int tile) async {
