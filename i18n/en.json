@@ -4,5 +4,6 @@
   "game_player": "Player",
   "game_computer": "Computer",
   "game_draw": "It's a draw!",
+  "game_new": "New game",
   "game_winner": "{0} wins!"
 }

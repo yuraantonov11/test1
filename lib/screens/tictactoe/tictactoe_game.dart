@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:test1/screens/tictactoe/models/tile_state.dart';
 
+import '../../app_localizations.dart';
+
 class TicTacToeGame extends StatefulWidget {
   final BluetoothDevice? server;
   final bool playLocal;
@@ -110,7 +112,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
                     Navigator.of(context).pop();
                     _resetGame();
                   },
-                  child: const Text('New Game'))
+                  child: Text(AppLocalizations.of(context).translate('settings_title')))
             ],
           );
         });
@@ -240,7 +242,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
                   })),
           ElevatedButton(
             onPressed: _resetGame,
-            child: const Text('New Game'),
+            child: Text(AppLocalizations.of(context).translate('settings_title')),
           ),
         ],
       ),

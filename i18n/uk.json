@@ -4,5 +4,6 @@
   "game_player": "Гравець",
   "game_computer": "Комп'ютер",
   "game_draw": "Нічия!",
+  "game_new": "Нова гра",
   "game_winner": "{0} переміг(ла)!"
 }
