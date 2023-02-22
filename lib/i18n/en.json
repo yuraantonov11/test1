@@ -1,0 +1,8 @@
+{
+  "app_title": "Tic Tac Toe",
+  "menu_settings": "Settings",
+  "game_player": "Player",
+  "game_computer": "Computer",
+  "game_draw": "It's a draw!",
+  "game_winner": "{0} wins!"
+}
