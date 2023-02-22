@@ -1,30 +1,71 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:test1/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('TicTacToeGame', () {
+    late TicTacToeGame game;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    setUp(() {
+      game = TicTacToeGame(playLocal: true);
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    test('Winner is determined correctly', () {
+      // Test rows
+      game.board = [
+        [TileState.cross, TileState.cross, TileState.cross],
+        [TileState.empty, TileState.circle, TileState.circle],
+        [TileState.empty, TileState.empty, TileState.circle],
+      ];
+      game._checkForWinner();
+      expect(game.winner, TileState.cross);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      // Test columns
+      game.board = [
+        [TileState.cross, TileState.empty, TileState.circle],
+        [TileState.cross, TileState.circle, TileState.circle],
+        [TileState.cross, TileState.empty, TileState.empty],
+      ];
+      game._checkForWinner();
+      expect(game.winner, TileState.cross);
+
+      // Test diagonal
+      game.board = [
+        [TileState.cross, TileState.circle, TileState.empty],
+        [TileState.empty, TileState.cross, TileState.circle],
+        [TileState.circle, TileState.empty, TileState.cross],
+      ];
+      game._checkForWinner();
+      expect(game.winner, TileState.cross);
+
+      // Test tie
+      game.board = [
+        [TileState.cross, TileState.circle, TileState.cross],
+        [TileState.circle, TileState.cross, TileState.circle],
+        [TileState.circle, TileState.cross, TileState.circle],
+      ];
+      game._checkForWinner();
+      expect(game.winner, TileState.empty);
+      expect(game._message, 'It\'s a tie!');
+    });
+
+    test('Reset game works correctly', () {
+      game.board[1][1] = TileState.cross;
+      game.currentPlayer = TileState.circle;
+      game._totalMoves = 4;
+      game.winner = TileState.cross;
+      game._message = 'Player 1 wins!';
+
+      game._resetGame();
+
+      expect(game.board, [
+        [TileState.empty, TileState.empty, TileState.empty],
+        [TileState.empty, TileState.empty, TileState.empty],
+        [TileState.empty, TileState.empty, TileState.empty],
+      ]);
+      expect(game.currentPlayer, TileState.circle);
+      expect(game._totalMoves, 0);
+      expect(game.winner, TileState.empty);
+      expect(game._message, '');
+    });
   });
 }
