@@ -95,6 +95,36 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
     }
   }
 
+  void _showWinnerDialog(TileState winner) {
+    String message = '';
+    switch (winner) {
+      case TileState.circle:
+        message = 'Circle wins!';
+        break;
+      case TileState.cross:
+        message = 'Cross wins!';
+        break;
+      default:
+        break;
+    }
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Game Over'),
+            content: Text(message),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _resetGame();
+                  },
+                  child: const Text('New Game'))
+            ],
+          );
+        });
+  }
+
   void _checkForWinner() {
     // Check rows
     for (int row = 0; row < 3; row++) {
@@ -104,6 +134,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
         setState(() {
           winner = board[row][0];
         });
+        _showWinnerDialog(winner);
         return;
       }
     }
@@ -116,6 +147,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
         setState(() {
           winner = board[0][col];
         });
+        _showWinnerDialog(winner);
         return;
       }
     }
@@ -127,6 +159,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
       setState(() {
         winner = board[0][0];
       });
+      _showWinnerDialog(winner);
       return;
     }
     if (board[0][2] != TileState.empty &&
@@ -135,6 +168,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
       setState(() {
         winner = board[0][2];
       });
+      _showWinnerDialog(winner);
       return;
     }
 
