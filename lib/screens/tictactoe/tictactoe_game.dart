@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:test1/screens/tictactoe/models/tile_state.dart';
@@ -27,11 +28,13 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
       3, (i) => List.filled(3, TileState.empty));
   String _message = '';
   int _totalMoves = 0;
+  late ConfettiController _controller;
 
   @override
   void initState() {
     super.initState();
     _connect();
+    _controller = ConfettiController(duration: const Duration(seconds: 3));
   }
 
   @override
@@ -112,10 +115,41 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
                     Navigator.of(context).pop();
                     _resetGame();
                   },
-                  child: Text(AppLocalizations.of(context).translate('settings_title')))
+                  child: Text(AppLocalizations.of(context).translate('game_new')))
             ],
           );
         });
+  }
+
+  void _showCelebrationScreen() {
+    _controller.play();
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('Congratulations!'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('You won the game!'),
+            SizedBox(height: 16),
+            ConfettiWidget(
+              confettiController: _controller,
+              blastDirectionality: BlastDirectionality.explosive,
+              shouldLoop: false,
+            ),
+          ],
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              _controller.stop();
+              Navigator.of(context).pop();
+            },
+            child: Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   void _checkForWinner() {
@@ -128,6 +162,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
           winner = board[row][0];
         });
         _showWinnerDialog(winner);
+        _showCelebrationScreen();
         return;
       }
     }
@@ -141,6 +176,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
           winner = board[0][col];
         });
         _showWinnerDialog(winner);
+        _showCelebrationScreen();
         return;
       }
     }
@@ -153,6 +189,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
         winner = board[0][0];
       });
       _showWinnerDialog(winner);
+      _showCelebrationScreen();
       return;
     }
     if (board[0][2] != TileState.empty &&
@@ -162,6 +199,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
         winner = board[0][2];
       });
       _showWinnerDialog(winner);
+      _showCelebrationScreen();
       return;
     }
 
@@ -242,7 +280,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
                   })),
           ElevatedButton(
             onPressed: _resetGame,
-            child: Text(AppLocalizations.of(context).translate('settings_title')),
+            child: Text(AppLocalizations.of(context).translate('game_new')),
           ),
         ],
       ),
