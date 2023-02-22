@@ -157,9 +157,6 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
       TileState.circle: const Icon(Icons.radio_button_unchecked, size: 60.0),
     };
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Хрестики Нулики'),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
