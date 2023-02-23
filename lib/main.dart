@@ -6,6 +6,7 @@ import 'package:test1/sound_manager.dart';
 import 'app_localizations.dart';
 import 'screens/homepage/home_page.dart';
 import 'screens/settings/settings_screen.dart';
+import '../../sound_manager.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,6 +21,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late SoundManager _soundManager;
+  final bool _soundEnabled = true;
+  late var _toggleSound;
 
   @override
   void initState() {
@@ -55,10 +58,16 @@ class _MyAppState extends State<MyApp> {
           ),
           initialRoute: '/',
           routes: {
-            '/': (context) => HomePage(onPlayClickSound: _playClickSound),
+            '/': (context) => HomePage(
+                onPlayClickSound: _playClickSound,
+                onPlayLoseSound: _playClickSound,
+                onPlayWinSound: _playClickSound,
+              soundManager: _soundManager,
+            ),
             '/settings': (context) => SettingsScreen(
               soundEnabled: _soundEnabled,
               onToggleSound: _toggleSound,
+              soundManager: _soundManager,
             ),
           },
         );
