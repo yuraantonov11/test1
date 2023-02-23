@@ -3,6 +3,8 @@ import '../tictactoe/tictactoe_game.dart';
 import '../settings/settings_screen.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({required onPlayClickSound}) : super();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
