@@ -21,8 +21,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late SoundManager _soundManager;
-  late bool _soundEnabled = true;
+  static late SoundManager _soundManager = SoundManager();
 
   late void Function(bool) _toggleSound; // add initialization value
 
@@ -30,15 +29,10 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _soundManager = SoundManager();
-    _toggleSound = (soundEnabled) {
-      setState(() {
-        _soundEnabled = !soundEnabled;
-      });
-    };
   }
 
   void _playClickSound() async {
-    await _soundManager.playSound('assets/sounds/click.mp3');
+    await _soundManager.playSound('assets/sounds/zapsplat_multimedia_button_click_bright_001_92098.mp3');
   }
 
   // ...
@@ -71,11 +65,7 @@ class _MyAppState extends State<MyApp> {
                 onPlayWinSound: _playClickSound,
               soundManager: _soundManager,
             ),
-            '/settings': (context) => SettingsScreen(
-              soundEnabled: _soundEnabled,
-              onToggleSound: _toggleSound,
-              soundManager: _soundManager,
-            ),
+            '/settings': (context) => SettingsScreen(),
             '/tictactoe': (context) => TicTacToeGame(),
           },
         );

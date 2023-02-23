@@ -4,15 +4,10 @@ import '../../app_localizations.dart';
 import '../../sound_manager.dart';
 
 class SettingsScreen extends StatelessWidget {
-  final bool soundEnabled;
-  final Function(bool) onToggleSound;
-  final SoundManager soundManager; // Add the SoundManager parameter here
+  static final SoundManager _soundManager = SoundManager();
 
   const SettingsScreen({
-    Key? key,
-    required this.soundEnabled,
-    required this.onToggleSound,
-    required this.soundManager, // Update the constructor to accept a SoundManager
+    Key? key
   }) : super(key: key);
 
   @override
@@ -29,9 +24,9 @@ class SettingsScreen extends StatelessWidget {
             leading: Icon(Icons.volume_up),
             title: Text(AppLocalizations.of(context).translate('sound_title')),
             trailing: Switch(
-              value: soundEnabled,
+              value: _soundManager.soundEnabled,
               onChanged: (value) {
-                onToggleSound(value);
+                _soundManager.toggleSound();
               },
             ),
           ),
