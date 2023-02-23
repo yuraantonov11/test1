@@ -11,7 +11,7 @@ class SoundManager {
   // Update the playSound method to check if sound is enabled
   Future<void> playSound(String soundPath) async {
     if (_soundEnabled) {
-      // await _audioCache(soundPath);
+      await _audioCache(soundPath);
     }
   }
 

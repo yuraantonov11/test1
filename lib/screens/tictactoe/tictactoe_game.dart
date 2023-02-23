@@ -7,6 +7,7 @@ import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:test1/screens/tictactoe/models/tile_state.dart';
 
 import '../../app_localizations.dart';
+import '../../sound_manager.dart';
 
 class TicTacToeGame extends StatefulWidget {
   final BluetoothDevice? server;
@@ -29,6 +30,11 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
   String _message = '';
   int _totalMoves = 0;
   late ConfettiController _controller;
+  late final SoundManager soundManager;
+
+  _TicTacToeGameState() {
+    soundManager = SoundManager();
+  }
 
   @override
   void initState() {
@@ -64,7 +70,6 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
     }
   }
 
-
   void _handleIncomingData(List<int> data) {
     int row = data[0];
     int col = data[1];
@@ -77,8 +82,6 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
       _checkForWinner();
     }
   }
-
-
 
   Future<void> _sendData(int row, int col, int tile) async {
     try {
@@ -261,6 +264,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
                     final int col = index % 3;
                     return GestureDetector(
                       onTap: () {
+                        soundManager.playSound('assets/sounds/zapsplat_multimedia_button_click_bright_001_92098.mp3');
                         if (board[row][col] == TileState.empty && winner == TileState.empty) {
                           setState(() {
                             board[row][col] = currentPlayer;
