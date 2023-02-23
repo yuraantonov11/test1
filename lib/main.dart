@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:test1/screens/tictactoe/tictactoe_game.dart';
 import 'package:test1/sound_manager.dart';
 import 'app_localizations.dart';
 import 'screens/homepage/home_page.dart';
@@ -21,13 +22,19 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late SoundManager _soundManager;
-  final bool _soundEnabled = true;
-  late var _toggleSound;
+  late bool _soundEnabled = true;
+
+  late void Function(bool) _toggleSound; // add initialization value
 
   @override
   void initState() {
     super.initState();
     _soundManager = SoundManager();
+    _toggleSound = (soundEnabled) {
+      setState(() {
+        _soundEnabled = !soundEnabled;
+      });
+    };
   }
 
   void _playClickSound() async {
@@ -69,6 +76,7 @@ class _MyAppState extends State<MyApp> {
               onToggleSound: _toggleSound,
               soundManager: _soundManager,
             ),
+            '/tictactoe': (context) => TicTacToeGame(),
           },
         );
       },

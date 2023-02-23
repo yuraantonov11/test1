@@ -1,5 +1,6 @@
 {
   "app_title": "Tic Tac Toe",
+  "home_page_welcome_message": "Hello",
   "menu_settings": "Settings",
   "game_player": "Player",
   "game_computer": "Computer",

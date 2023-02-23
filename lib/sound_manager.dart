@@ -1,17 +1,22 @@
 import 'package:audioplayers/audioplayers.dart';
 
 class SoundManager {
-  late AudioPlayer _audioPlayer;
+  bool _soundEnabled = true;
+  final AudioCache _audioCache = AudioCache();
 
-  SoundManager() {
-    _audioPlayer = AudioPlayer();
+  // Add the getter for the soundEnabled property
+  bool get soundEnabled => _soundEnabled;
+
+  // Update the playSound method to check if sound is enabled
+  Future<void> playSound(String soundPath) async {
+    if (_soundEnabled) {
+      await _audioCache.(soundPath);
+    }
   }
 
-  Future<void> playSound(soundAsset) async {
-    await _audioPlayer.play(soundAsset);
-  }
-
-  Future<void> stopSound() async {
-    await _audioPlayer.stop();
+  // Add the toggleSound method
+  void toggleSound(bool value) {
+    _soundEnabled = value;
   }
 }
+

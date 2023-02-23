@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate('home_page_title')),
+        title: Text(AppLocalizations.of(context).translate('app_title')),
       ),
       body: Center(
         child: Column(
