@@ -23,22 +23,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // ...
-
-  void _playClickSound() {
-    widget.onPlayClickSound(); // Replace this line
-    widget.soundManager.playSound('sounds/click.mp3'); // with this line
-  }
-
-  void _playWinSound() {
-    widget.onPlayWinSound(); // Replace this line
-    widget.soundManager.playSound('sounds/win.mp3'); // with this line
-  }
-
-  void _playLoseSound() {
-    widget.onPlayLoseSound(); // Replace this line
-    widget.soundManager.playSound('sounds/lose.mp3'); // with this line
-  }
 
   @override
   Widget build(BuildContext context) {

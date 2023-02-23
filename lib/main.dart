@@ -21,14 +21,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  static late SoundManager _soundManager = SoundManager();
+  late SoundManager _soundManager;
+  late bool _soundEnabled = true;
 
-  late void Function(bool) _toggleSound; // add initialization value
+  late Function(bool) _toggleSound;
 
   @override
   void initState() {
     super.initState();
     _soundManager = SoundManager();
+    _toggleSound = (bool isEnabled) {
+      setState(() {
+        _soundEnabled = isEnabled;
+      });
+    };
   }
 
   void _playClickSound() async {
@@ -65,7 +71,11 @@ class _MyAppState extends State<MyApp> {
                 onPlayWinSound: _playClickSound,
               soundManager: _soundManager,
             ),
-            '/settings': (context) => SettingsScreen(),
+            '/settings': (context) => SettingsScreen(
+              soundEnabled: _soundEnabled,
+              onToggleSound: _toggleSound,
+              soundManager: _soundManager,
+            ),
             '/tictactoe': (context) => TicTacToeGame(),
           },
         );
