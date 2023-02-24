@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:test1/screens/tictactoe/components/tile.dart';
 
+import '../models/tile_state_enum.dart';
+
 class Board extends StatefulWidget {
   final Function() onPressed;
 
@@ -11,8 +13,8 @@ class Board extends StatefulWidget {
 }
 
 class _BoardState extends State<Board> {
-  List<List<Tile>> _board =
-  List.generate(3, (i) => List.generate(3, (j) => Tile(onPressed: () {})));
+  List<List<Tile>> _board = List.generate(3, (i) => List.generate(3, (j) => Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {})))
+
 
   @override
   Widget build(BuildContext context) {
