@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:test1/main.dart';
+import 'package:test1/screens/tictactoe/models/tile_state.dart';
+import 'package:test1/screens/tictactoe/tictactoe_game.dart';
 
 void main() {
   group('TicTacToeGame', () {
