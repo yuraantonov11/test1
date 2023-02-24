@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test1/screens/tictactoe/components/tile.dart';
+import 'package:test1/screens/tictactoe/models/tile_state_enum.dart';
 
-import '../models/tile_state_enum.dart';
 class Board extends StatefulWidget {
   final TileStateEnum tileStateEnum;
   final Function() onPressed;
@@ -13,30 +13,7 @@ class Board extends StatefulWidget {
 }
 
 class _BoardState extends State<Board> {
-  TileStateEnum currentPlayer = TileStateEnum.circle;
-
-  final List<List<TileStateEnum>> _board = List.generate(
-    3,
-        (i) => List.generate(
-      3,
-          (j) => Tile(
-        tileStateEnum: widget.tileStateEnum, // зміна
-        onPressed: () {},
-      ),
-    ),
-  );
-
-
-  void _onTilePressed(int x, int y) {
-    if (_board[x][y] == TileStateEnum.empty) {
-      setState(() {
-        _board[x][y] = currentPlayer;
-        currentPlayer = currentPlayer == TileStateEnum.circle
-            ? TileStateEnum.cross
-            : TileStateEnum.circle;
-      });
-    }
-  }
+  final List<List<Tile>> _board = List.generate(3, (i) => List.generate(3, (j) => Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {})));
 
   @override
   Widget build(BuildContext context) {
@@ -48,31 +25,31 @@ class _BoardState extends State<Board> {
       ),
       child: Column(
         children: _board
-            .asMap()
-            .map(
-              (x, row) => MapEntry(
-            x,
-            Row(
-              children: row
-                  .asMap()
-                  .map(
-                    (y, tileStateEnum) => MapEntry(
-                  y,
-                  Tile(
-                    tileStateEnum: tileStateEnum,
-                    onPressed: () => _onTilePressed(x, y),
-                  ),
-                ),
-              )
-                  .values
-                  .toList(),
-            ),
+            .map((row) => Row(
+          children: row
+              .map((tile) => _buildTile(tile))
+              .toList(growable: false),
+        ))
+            .toList(growable: false),
+      ),
+    );
+  }
+
+  Widget _buildTile(Tile tile) {
+    return Expanded(
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            tile.tap();
+          });
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(),
           ),
-        )
-            .values
-            .toList(),
+          child: Center(child: Text(tile.tileStateEnum.value)),
+        ),
       ),
     );
   }
 }
-

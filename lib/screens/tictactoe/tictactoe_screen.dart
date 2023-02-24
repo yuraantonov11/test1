@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:test1/screens/tictactoe/components/board.dart';
 
+import 'models/tile_state_enum.dart';
+
 class TicTacToeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
