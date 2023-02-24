@@ -1,34 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:test1/screens/tictactoe/models/tile_state_enum.dart';
-import 'package:test1/screens/tictactoe/tictactoe_game.dart';
+
+import '../tictactoe_game.dart';
 
 class Tile extends StatefulWidget {
   final Function() onPressed;
+  final TileStateEnum tileStateEnum;
 
-  Tile({required this.onPressed});
+  const Tile({Key? key, required this.tileStateEnum, required this.onPressed})
+      : super(key: key);
+
+  void tap() {
+    if (tileStateEnum == TileStateEnum.empty) {
+      TicTacToeGame.currentPlayer = TicTacToeGame.currentPlayer == TileStateEnum.circle
+          ? TileStateEnum.cross
+          : TileStateEnum.circle;
+    }
+  }
 
   @override
   _TileState createState() => _TileState();
 }
 
 class _TileState extends State<Tile> {
-  late TileStateEnum _currentState;
-
-  void tap() {
-    if (_currentState == TileStateEnum.empty) {
-      setState(() {
-        _currentState = TicTacToeGame.currentPlayer;
-        TicTacToeGame.currentPlayer = TicTacToeGame.currentPlayer == TileStateEnum.circle
-            ? TileStateEnum.cross
-            : TileStateEnum.circle;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: tap,
+      onTap: widget.tap,
       child: Container(
         width: 80,
         height: 80,
@@ -45,7 +43,7 @@ class _TileState extends State<Tile> {
           ],
         ),
         child: Text(
-          _currentState.value,
+          widget.tileStateEnum.value,
           style: TextStyle(fontSize: 40),
         ),
       ),

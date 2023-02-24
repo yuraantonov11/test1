@@ -38,11 +38,7 @@ class _BoardState extends State<Board> {
   Widget _buildTile(Tile tile) {
     return Expanded(
       child: InkWell(
-        onTap: () {
-          setState(() {
-            tile.tap();
-          });
-        },
+        onTap: tile.tap,
         child: Container(
           decoration: BoxDecoration(
             border: Border.all(),

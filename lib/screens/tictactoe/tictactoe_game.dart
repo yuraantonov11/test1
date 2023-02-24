@@ -14,6 +14,7 @@ import 'models/tile_state_enum.dart';
 class TicTacToeGame extends StatefulWidget {
   final BluetoothDevice? server;
   final bool playLocal;
+  static TileStateEnum currentPlayer = TileStateEnum.circle;
 
   TicTacToeGame({this.server, this.playLocal = false});
 

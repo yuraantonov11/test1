@@ -4,6 +4,8 @@ import 'package:test1/screens/tictactoe/components/board.dart';
 import 'models/tile_state_enum.dart';
 
 class TicTacToeScreen extends StatelessWidget {
+  const TicTacToeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +19,6 @@ class TicTacToeScreen extends StatelessWidget {
               tileStateEnum: TileStateEnum.empty,
               onPressed: () {},
             ),
-
           ],
         ),
       ),
@@ -26,13 +27,15 @@ class TicTacToeScreen extends StatelessWidget {
 }
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const MyAppBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text('Tic Tac Toe'),
+      title: const Text('Tic Tac Toe'),
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
