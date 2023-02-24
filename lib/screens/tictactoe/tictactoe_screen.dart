@@ -11,7 +11,11 @@ class TicTacToeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Board(onPressed: () {}),
+            Board(
+              tileStateEnum: TileStateEnum.empty,
+              onPressed: () {},
+            ),
+
           ],
         ),
       ),

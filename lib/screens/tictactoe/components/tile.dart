@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test1/screens/tictactoe/models/tile_state_enum.dart';
 
 class Tile extends StatefulWidget {
-  final TileStateEnum tileStateEnum;
+  final TileStateEnum tileStateEnum; // зміна
   final Function() onPressed;
 
   Tile({required this.tileStateEnum, required this.onPressed});
@@ -14,18 +14,11 @@ class Tile extends StatefulWidget {
 class _TileState extends State<Tile> {
   late TileStateEnum _currentState;
 
-  @override
-  void initState() {
-    super.initState();
-    _currentState = TileStateEnum.empty;
-  }
-
   void tap() {
     if (_currentState == TileStateEnum.empty) {
       setState(() {
         _currentState = widget.tileStateEnum;
       });
-      widget.onPressed();
     }
   }
 
@@ -49,10 +42,13 @@ class _TileState extends State<Tile> {
           ],
         ),
         child: Text(
-          _currentState.value,
+          widget.tileStateEnum.value, // зміна
           style: TextStyle(fontSize: 40),
         ),
       ),
     );
   }
 }
+
+
+
