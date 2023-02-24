@@ -94,7 +94,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
     }
   }
 
-  void _showWinnerDialog(TileState winner) {
+  void _showWinnerDialog(BuildContext context, TileState winner) {
     String message = '';
     switch (winner) {
       case TileState.circle:
@@ -164,7 +164,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
         setState(() {
           winner = board[row][0];
         });
-        _showWinnerDialog(winner);
+        _showWinnerDialog(context, winner);
         _showCelebrationScreen();
         return;
       }
@@ -178,7 +178,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
         setState(() {
           winner = board[0][col];
         });
-        _showWinnerDialog(winner);
+        _showWinnerDialog(context, winner);
         _showCelebrationScreen();
         return;
       }
@@ -191,7 +191,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
       setState(() {
         winner = board[0][0];
       });
-      _showWinnerDialog(winner);
+      _showWinnerDialog(context, winner);
       _showCelebrationScreen();
       return;
     }
@@ -201,7 +201,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
       setState(() {
         winner = board[0][2];
       });
-      _showWinnerDialog(winner);
+      _showWinnerDialog(context, winner);
       _showCelebrationScreen();
       return;
     }
@@ -247,7 +247,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 20.0),
             child: Text(
-              '$_message',
+              _message,
               style: const TextStyle(fontSize: 24.0),
             ),
           ),
@@ -264,7 +264,13 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
                     final int col = index % 3;
                     return GestureDetector(
                       onTap: () {
-                        soundManager.playSound('assets/sounds/zapsplat_multimedia_button_click_bright_001_92098.mp3');
+                        if(currentPlayer == TileState.circle) {
+                          soundManager.playSound(
+                              'sounds/zapsplat_multimedia_button_click_bright_001_92098.mp3');
+                        } else {
+                          soundManager.playSound(
+                              'sounds/zapsplat_multimedia_button_click_bright_002_92099.mp3');
+                        }
                         if (board[row][col] == TileState.empty && winner == TileState.empty) {
                           setState(() {
                             board[row][col] = currentPlayer;
