@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test1/screens/tictactoe/components/tile.dart';
+import 'package:test1/screens/tictactoe/models/tile_state_enum.dart';
 
 class Tile extends StatefulWidget {
   final TileStateEnum tileStateEnum;
