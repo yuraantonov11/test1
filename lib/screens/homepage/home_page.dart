@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../app_localizations.dart';
 import '../../sound_manager.dart';
-import '../tictactoe/tictactoe_game.dart';
-import '../settings/settings_screen.dart';
 
 class HomePage extends StatefulWidget {
   final Function onPlayClickSound;

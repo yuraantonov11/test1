@@ -13,7 +13,7 @@ class Board extends StatefulWidget {
 }
 
 class _BoardState extends State<Board> {
-  List<List<Tile>> _board = List.generate(3, (i) => List.generate(3, (j) => Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {})))
+  List<List<Tile>> _board = List.generate(3, (i) => List.generate(3, (j) => Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {})));
 
 
   @override
