@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../app_localizations.dart';
-import '../../sound_manager.dart';
+import 'package:test1/app_localizations.dart';
+import 'package:test1/sound_manager.dart';
 
-class SettingsScreen extends StatelessWidget {
-  final bool soundEnabled;
-  final Function(bool) onToggleSound;
+class SettingsScreen extends StatefulWidget {
   final SoundManager soundManager;
 
-  SettingsScreen({
-    Key? key,
-    required this.soundEnabled,
-    required this.onToggleSound,
-    required this.soundManager,
-  }) : super(key: key);
+  SettingsScreen({required this.soundManager});
+
+  @override
+  _SettingsScreenState createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +20,16 @@ class SettingsScreen extends StatelessWidget {
         title: Text(AppLocalizations.of(context).translate('settings_title')),
       ),
       body: Column(
-        children: <Widget>[
-          ListTile(
-            leading: Icon(Icons.volume_up),
-            title: Text(AppLocalizations.of(context).translate('sound_title')),
-            trailing: Switch(
-              value: soundEnabled,
-              onChanged: (value) {
-                onToggleSound(value);
-              },
-            ),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SwitchListTile(
+            title: Text(AppLocalizations.of(context).translate('settings_sound')),
+            value: widget.soundManager.soundEnabled,
+            onChanged: (value) {
+              setState(() {
+                widget.soundManager.toggleSound();
+              });
+            },
           ),
         ],
       ),

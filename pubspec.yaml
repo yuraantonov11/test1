@@ -34,6 +34,7 @@ dependencies:
   confetti: ^0.7.0
   flutter_bluetooth_serial: ^0.4.0
   flutter_screenutil: ^5.6.1
+  shared_preferences: ^2.0.18
 
   flutter_localizations:
     sdk: flutter

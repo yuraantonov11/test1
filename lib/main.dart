@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:test1/screens/tictactoe/tictactoe_game.dart';
@@ -71,11 +70,7 @@ class _MyAppState extends State<MyApp> {
                 onPlayWinSound: _playClickSound,
               soundManager: _soundManager,
             ),
-            '/settings': (context) => SettingsScreen(
-              soundEnabled: _soundEnabled,
-              onToggleSound: _toggleSound,
-              soundManager: _soundManager,
-            ),
+            '/settings': (context) => SettingsScreen(soundManager: _soundManager),
             '/tictactoe': (context) => TicTacToeGame(),
           },
         );
