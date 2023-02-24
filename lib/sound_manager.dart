@@ -7,6 +7,11 @@ class SoundManager {
   // Add the getter for the soundEnabled property
   bool get soundEnabled => _soundEnabled;
 
+  SoundManager() {
+    readSoundEnabledState();
+  }
+
+
   // Read the value of the soundEnabled property from shared preferences
   Future<void> readSoundEnabledState() async {
     final prefs = await SharedPreferences.getInstance();
