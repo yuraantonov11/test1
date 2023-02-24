@@ -38,26 +38,18 @@ class _BoardState extends State<Board> {
   }
 
   Widget _buildTile(Tile tile) {
-    String value = '';
-    switch (tile.tileState) {
-      case TileState.circle:
-        value = 'O';
-        break;
-      case TileState.cross:
-        value = 'X';
-        break;
-      default:
-        value = '';
-        break;
-    }
     return Expanded(
       child: InkWell(
-        onTap: widget.onPressed,
+        onTap: () {
+          setState(() {
+            tile.tap();
+          });
+        },
         child: Container(
           decoration: BoxDecoration(
             border: Border.all(),
           ),
-          child: Center(child: Text(value)),
+          child: Center(child: Text(tile.tileState.value)),
         ),
       ),
     );
