@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test1/screens/tictactoe/components/board.dart';
 
-import 'components/tile.dart';
-
 class TicTacToeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -13,10 +11,7 @@ class TicTacToeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-          Board(
-                tileStateEnum: TileStateEnum.empty,
-                onPressed: () {},
-              ),
+            Board(onPressed: () {}),
           ],
         ),
       ),

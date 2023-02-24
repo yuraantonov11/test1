@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test1/screens/tictactoe/components/tile.dart';
 
 class Tile extends StatefulWidget {
   final TileStateEnum tileStateEnum;
@@ -11,7 +12,13 @@ class Tile extends StatefulWidget {
 }
 
 class _TileState extends State<Tile> {
-  TileStateEnum _currentState = TileStateEnum.empty;
+  late TileStateEnum _currentState;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentState = TileStateEnum.empty;
+  }
 
   void tap() {
     if (_currentState == TileStateEnum.empty) {
@@ -42,29 +49,10 @@ class _TileState extends State<Tile> {
           ],
         ),
         child: Text(
-          value,
+          _currentState.value,
           style: TextStyle(fontSize: 40),
         ),
       ),
     );
-  }
-}
-
-enum TileStateEnum {
-  empty,
-  cross,
-  circle,
-}
-
-extension TileStateEnumExtension on TileStateEnum {
-  String get value {
-    switch (this) {
-      case TileStateEnum.circle:
-        return 'O';
-      case TileStateEnum.cross:
-        return 'X';
-      default:
-        return '';
-    }
   }
 }
