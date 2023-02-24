@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:test1/screens/tictactoe/models/tile.dart';
-import 'package:test1/screens/tictactoe/models/tile_state.dart';
+import 'package:test1/screens/tictactoe/components/tile.dart';
 
 class Board extends StatefulWidget {
-  final TileState tileState;
+  final TileStateEnum tileStateEnum;
   final Function() onPressed;
 
-  Board({required this.tileState, required this.onPressed});
+  Board({required this.tileStateEnum, required this.onPressed});
+
   @override
   _BoardState createState() => _BoardState();
 }
 
 class _BoardState extends State<Board> {
   final List<List<Tile>> _board = [
-    [Tile(tileState: TileState.empty, onPressed: () {}), Tile(tileState: TileState.empty, onPressed: () {}), Tile(tileState: TileState.empty, onPressed: () {})],
-    [Tile(tileState: TileState.empty, onPressed: () {}), Tile(tileState: TileState.empty, onPressed: () {}), Tile(tileState: TileState.empty, onPressed: () {})],
-    [Tile(tileState: TileState.empty, onPressed: () {}), Tile(tileState: TileState.empty, onPressed: () {}), Tile(tileState: TileState.empty, onPressed: () {})],
+    [Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {}), Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {}), Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {})],
+    [Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {}), Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {}), Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {})],
+    [Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {}), Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {}), Tile(tileStateEnum: TileStateEnum.empty, onPressed: () {})],
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +29,11 @@ class _BoardState extends State<Board> {
       child: Column(
         children: _board
             .map((row) => Row(
-          children: row.map((tile) => _buildTile(tile)).toList(),
+          children: row
+              .map((tile) => _buildTile(tile))
+              .toList(growable: false),
         ))
-            .toList(),
+            .toList(growable: false),
       ),
     );
   }
@@ -49,7 +50,7 @@ class _BoardState extends State<Board> {
           decoration: BoxDecoration(
             border: Border.all(),
           ),
-          child: Center(child: Text(tile.tileState.value)),
+          child: Center(child: Text(tile.tileStateEnum.value)),
         ),
       ),
     );
