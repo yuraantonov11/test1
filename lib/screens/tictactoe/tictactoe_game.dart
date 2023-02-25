@@ -14,7 +14,18 @@ class TicTacToeGame extends StatefulWidget {
   final bool playLocal;
   static TileStateEnum currentPlayer = TileStateEnum.circle;
 
-  TicTacToeGame({this.server, this.playLocal = false});
+  const TicTacToeGame({Key? key, this.server, this.playLocal = false})
+      : super(key: key);
+
+  static GlobalKey<_TicTacToeGameState> gameStateKey =
+  GlobalKey<_TicTacToeGameState>();
+
+  void setBoard(List<List<TileStateEnum>> newBoard) {
+    _TicTacToeGameState gameState = gameStateKey.currentState!;
+    gameState.setState(() {
+      gameState.board = newBoard;
+    });
+  }
 
   @override
   _TicTacToeGameState createState() => _TicTacToeGameState();
@@ -52,10 +63,10 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
 
   Future<void> _connect() async {
     try {
-      BluetoothConnection _connection = await BluetoothConnection.toAddress(widget.server?.address);
+      BluetoothConnection? connection = await BluetoothConnection.toAddress(widget.server?.address);
       print('Connected to the device');
       setState(() {
-        connection = _connection;
+        connection = connection;
         connected = true;
       });
       connection?.input?.listen(_handleIncomingData).onDone(() {
@@ -84,7 +95,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
     }
   }
 
-  Future<void> _sendData(int row, int col, int tile) async {
+  Future<void> _sendMoveToOpponent(int row, int col, int tile) async {
     try {
       connection?.output.add(Uint8List.fromList(
           utf8.encode('$row,$col,$tile,${currentPlayer.index}\n')));
@@ -121,12 +132,12 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text('Congratulations!'),
+        title: const Text('Congratulations!'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('You won the game!'),
-            SizedBox(height: 16),
+            const Text('You won the game!'),
+            const SizedBox(height: 16),
             ConfettiWidget(
               confettiController: _controller,
               blastDirectionality: BlastDirectionality.explosive,
@@ -140,7 +151,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
               _controller.stop();
               Navigator.of(context).pop();
             },
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       ),
@@ -207,7 +218,6 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
     }
   }
 
-
   void _resetGame() {
     setState(() {
       board = List.generate(3, (i) => List.filled(3, TileStateEnum.empty));
@@ -266,7 +276,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
                         if (board[row][col] == TileStateEnum.empty && winner == TileStateEnum.empty) {
                           setState(() {
                             board[row][col] = currentPlayer;
-                            _sendData(row, col, currentPlayer.index);
+                            _sendMoveToOpponent(row, col, currentPlayer.index);
                             _checkForWinner(); // Call _checkForWinner without checking its return value
                             if (_totalMoves < 9) {
                               currentPlayer = currentPlayer == TileStateEnum.circle ? TileStateEnum.cross : TileStateEnum.circle;
@@ -295,15 +305,14 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
       ),
     );
   }
-
-
 }
 
 class Board extends StatefulWidget {
   final TileStateEnum tileStateEnum;
   final Function() onPressed;
 
-  Board({required this.tileStateEnum, required this.onPressed});
+  const Board({Key? key, required this.tileStateEnum, required this.onPressed})
+      : super(key: key);
 
   @override
   _BoardState createState() => _BoardState();

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
-import 'package:test1/screens/tictactoe/components/board.dart';
 import 'package:test1/screens/tictactoe/tictactoe_game.dart';
-
-import 'models/tile_state_enum.dart';
 
 class TicTacToeScreen extends StatelessWidget {
   final BluetoothDevice? server;

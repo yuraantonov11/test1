@@ -1,4 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:test1/screens/tictactoe/tictactoe_game.dart';
+import 'package:test1/screens/tictactoe/models/tile_state_enum.dart';
 
 void main() {
   group('TicTacToeGame', () {
@@ -10,61 +12,61 @@ void main() {
 
     test('Winner is determined correctly', () {
       // Test rows
-      game.board = [
-        [TileState.cross, TileState.cross, TileState.cross],
-        [TileState.empty, TileState.circle, TileState.circle],
-        [TileState.empty, TileState.empty, TileState.circle],
-      ];
-      game._checkForWinner();
-      expect(game.winner, TileState.cross);
+      game.setBoard([
+        [TileStateEnum.cross, TileStateEnum.cross, TileStateEnum.cross],
+        [TileStateEnum.empty, TileStateEnum.circle, TileStateEnum.circle],
+        [TileStateEnum.empty, TileStateEnum.empty, TileStateEnum.circle],
+      ]);
+      game._TicTacToeGameState()._checkForWinner();
+      expect(game._TicTacToeGameState().winner, TileStateEnum.cross);
 
       // Test columns
-      game.board = [
-        [TileState.cross, TileState.empty, TileState.circle],
-        [TileState.cross, TileState.circle, TileState.circle],
-        [TileState.cross, TileState.empty, TileState.empty],
-      ];
-      game._checkForWinner();
-      expect(game.winner, TileState.cross);
+      game.setBoard([
+        [TileStateEnum.cross, TileStateEnum.empty, TileStateEnum.circle],
+        [TileStateEnum.cross, TileStateEnum.circle, TileStateEnum.circle],
+        [TileStateEnum.cross, TileStateEnum.empty, TileStateEnum.empty],
+      ]);
+      game._TicTacToeGameState()._checkForWinner();
+      expect(game._TicTacToeGameState().winner, TileStateEnum.cross);
 
       // Test diagonal
-      game.board = [
-        [TileState.cross, TileState.circle, TileState.empty],
-        [TileState.empty, TileState.cross, TileState.circle],
-        [TileState.circle, TileState.empty, TileState.cross],
-      ];
-      game._checkForWinner();
-      expect(game.winner, TileState.cross);
+      game.setBoard([
+        [TileStateEnum.cross, TileStateEnum.circle, TileStateEnum.empty],
+        [TileStateEnum.empty, TileStateEnum.cross, TileStateEnum.circle],
+        [TileStateEnum.circle, TileStateEnum.empty, TileStateEnum.cross],
+      ]);
+      game._TicTacToeGameState()._checkForWinner();
+      expect(game._TicTacToeGameState().winner, TileStateEnum.cross);
 
       // Test tie
-      game.board = [
-        [TileState.cross, TileState.circle, TileState.cross],
-        [TileState.circle, TileState.cross, TileState.circle],
-        [TileState.circle, TileState.cross, TileState.circle],
-      ];
-      game._checkForWinner();
-      expect(game.winner, TileState.empty);
-      expect(game._message, 'It\'s a tie!');
+      game.setBoard([
+        [TileStateEnum.cross, TileStateEnum.circle, TileStateEnum.cross],
+        [TileStateEnum.circle, TileStateEnum.cross, TileStateEnum.circle],
+        [TileStateEnum.circle, TileStateEnum.cross, TileStateEnum.circle],
+      ]);
+      game._TicTacToeGameState()._checkForWinner();
+      expect(game._TicTacToeGameState().winner, TileStateEnum.empty);
+      expect(game._TicTacToeGameState()._message, 'It\'s a tie!');
     });
 
     test('Reset game works correctly', () {
-      game.board[1][1] = TileState.cross;
-      game.currentPlayer = TileState.circle;
-      game._totalMoves = 4;
-      game.winner = TileState.cross;
-      game._message = 'Player 1 wins!';
+      game._TicTacToeGameState().board[1][1] = TileStateEnum.cross;
+      game._TicTacToeGameState().currentPlayer = TileStateEnum.circle;
+      game._TicTacToeGameState()._totalMoves = 4;
+      game._TicTacToeGameState().winner = TileStateEnum.cross;
+      game._TicTacToeGameState()._message = 'Player 1 wins!';
 
-      game._resetGame();
+      game._TicTacToeGameState()._resetGame();
 
-      expect(game.board, [
-        [TileState.empty, TileState.empty, TileState.empty],
-        [TileState.empty, TileState.empty, TileState.empty],
-        [TileState.empty, TileState.empty, TileState.empty],
+      expect(game._TicTacToeGameState().board, [
+        [TileStateEnum.empty, TileStateEnum.empty, TileStateEnum.empty],
+        [TileStateEnum.empty, TileStateEnum.empty, TileStateEnum.empty],
+        [TileStateEnum.empty, TileStateEnum.empty, TileStateEnum.empty],
       ]);
-      expect(game.currentPlayer, TileState.circle);
-      expect(game._totalMoves, 0);
-      expect(game.winner, TileState.empty);
-      expect(game._message, '');
+      expect(game._TicTacToeGameState().currentPlayer, TileStateEnum.circle);
+      expect(game._TicTacToeGameState()._totalMoves, 0);
+      expect(game._TicTacToeGameState().winner, TileStateEnum.empty);
+      expect(game._TicTacToeGameState()._message, '');
     });
   });
 }
