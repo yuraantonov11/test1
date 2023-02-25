@@ -5,8 +5,6 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:test1/screens/tictactoe/components/tile.dart';
-
-
 import '../../app_localizations.dart';
 import '../../sound_manager.dart';
 import 'models/tile_state_enum.dart';
